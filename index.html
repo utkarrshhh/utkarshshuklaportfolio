@@ -1,0 +1,2387 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Utkarsh Shukla - Full Stack Developer</title>
+
+    <link rel="icon" href="./src/imagelogo.webp" type="image/webp" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <script src="https://unpkg.com/framer-motion/dist/framer-motion.js"></script>
+    <style>
+      /* Add theme variables */
+      :root {
+        /* Light theme colors */
+        --primary-color: #2c3e50;
+        --secondary-color: #3498db;
+        --bg-color: #ffffff;
+        --text-color: #2c3e50;
+        --card-bg: rgba(255, 255, 255, 0.95);
+        --navbar-bg: rgba(255, 255, 255, 0.95);
+        --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        --navbar-text: #2c3e50;
+        --navbar-text-hover: #3498db; /* Add hover color */
+        --text-muted: #6c757d; /* Muted text color for light theme */
+        --cursor-color: #3498db;
+      }
+
+      /* Dark theme colors */
+      [data-theme="dark"] {
+        --primary-color: #ecf0f1;
+        --secondary-color: #3498db;
+        --bg-color: #1a1a1a;
+        --text-color: #ffffff;
+        --card-bg: rgba(40, 40, 40, 0.95);
+        --navbar-bg: rgba(40, 40, 40, 0.95);
+        --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        --navbar-text: #2c3e50;
+        --navbar-text-hover: #3498db; /* Add hover color */
+        --text-muted: #a0a0a0; /* Lighter muted text color for dark theme */
+        --cursor-color: #3498db;
+      }
+
+      .project-card,
+      .flip-card,
+      .contact-card,
+      .hero-content,
+      .nav-item,
+      .social-links a {
+        opacity: 0;
+        transform: translateY(50px);
+        filter: blur(5px);
+        transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .project-card,
+      .flip-card,
+      .contact-card,
+      .hero-content,
+      .nav-item,
+      .social-links a {
+        opacity: 0;
+        transform: translateY(30px);
+        filter: blur(3px);
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .project-card {
+        transition: transform 0.2s ease-out, opacity 0.1s ease-out,
+          box-shadow 0.3s ease-out;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      /* Theme toggle button styles */
+      .theme-toggle {
+        background: transparent;
+        border: none;
+        color: var(--text-color);
+        font-size: 1.2rem;
+        cursor: pointer;
+        padding: 0.5rem;
+        transition: all 0.3s ease;
+      }
+
+      .theme-toggle:hover {
+        color: var(--secondary-color);
+        transform: scale(1.1);
+      }
+
+      @media (max-width: 991px) {
+        .theme-toggle {
+          margin: 0.5rem 0;
+        }
+      }
+
+      /* Update existing styles to use CSS variables */
+      body {
+        background-color: var(--bg-color);
+        color: var(--text-color);
+      }
+
+      .navbar {
+        background-color: var(--navbar-bg);
+        box-shadow: var(--card-shadow);
+      }
+
+      .nav-link {
+        color: var(--navbar-text) !important;
+      }
+
+      .skill-card {
+        background: var(--card-bg);
+        box-shadow: var(--card-shadow);
+      }
+
+      .navbar-wrapper {
+        padding: 20px 30px;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+      }
+
+      .navbar {
+        /* background-color: rgba(255, 255, 255, 0.95); */
+        background-color: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        border-radius: 15px;
+        padding: 15px 25px;
+        max-width: 1400px;
+        margin: 10px 10px;
+      }
+
+      .navbar-brand {
+        font-size: 1.5rem;
+        color: var(--navbar-text) !important;
+        font-weight: 600;
+      }
+
+      .nav-link {
+        font-weight: 500;
+        margin: 0 12px;
+        position: relative;
+        padding: 5px 0;
+        color: var(--navbar-text) !important;
+      }
+
+      .nav-link-hover::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -2px;
+        left: 0;
+        background-color: var(--secondary-color);
+        transition: width 0.3s ease;
+      }
+
+      .nav-link-hover:hover::after {
+        width: 100%;
+      }
+
+      .nav-btn {
+        background-color: var(--secondary-color);
+        color: white !important;
+        padding: 8px 20px;
+        border-radius: 25px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        margin-left: 15px;
+      }
+
+      .nav-btn:hover {
+        background-color: var(--primary-color);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .hero-section {
+        min-height: 100vh;
+        background: none;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+      }
+
+      .hero-overlay {
+        background: rgba(0, 0, 0, 0.5); /* Lighter overlay */
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 2;
+        color: white;
+      }
+
+      .hero-image {
+        /* Update the hero background image */
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("https://images.unsplash.com/photo-1483356256511-b48749959172?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80")
+          center/cover no-repeat;
+        filter: brightness(0.8) saturate(0.8); /* Reduce brightness and saturation */
+      }
+
+      .social-links a {
+        color: white;
+        margin: 0 10px;
+        font-size: 1.5rem;
+        transition: color 0.3s;
+      }
+
+      .social-links a:hover {
+        color: var(--secondary-color);
+      }
+
+      .skills-section {
+        position: relative;
+        padding: 100px 0;
+        background: url("https://images.unsplash.com/photo-1497864149936-d3163f0c0f4b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80")
+          center/cover no-repeat fixed;
+        overflow: hidden;
+      }
+
+      .skills-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(0, 0, 0, 0.85) 0%,
+          rgba(0, 0, 0, 0.75) 100%
+        ); /* Lighter gradient overlay */
+        z-index: 1;
+      }
+
+      .skills-section .container {
+        position: relative;
+        z-index: 2;
+      }
+
+      .skills-section h2 {
+        color: white;
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        position: relative;
+        display: inline-block;
+      }
+
+      .skills-section h2::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: -10px;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: var(--secondary-color);
+        border-radius: 2px;
+      }
+
+      .skills-section .lead {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 1.3rem;
+        margin-bottom: 4rem;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .skill-card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 35px 25px;
+        border-radius: 20px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        transition: all 0.4s ease;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .skill-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.1) 0%,
+          rgba(255, 255, 255, 0.05) 100%
+        );
+        opacity: 0;
+        transition: opacity 0.4s ease;
+      }
+
+      .skill-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 6px 40px rgba(0, 0, 0, 0.4);
+      }
+
+      .skill-card:hover::before {
+        opacity: 1;
+      }
+
+      .skill-icon {
+        color: var(--secondary-color);
+        font-size: 3rem;
+        margin-bottom: 1.5rem;
+        transition: all 0.3s ease;
+      }
+
+      .skill-card:hover .skill-icon {
+        transform: scale(1.1);
+      }
+
+      .skill-card h4 {
+        color: white;
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        position: relative;
+      }
+
+      .skill-card h4::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -8px;
+        width: 40px;
+        height: 3px;
+        background: var(--secondary-color);
+        border-radius: 2px;
+      }
+
+      .skill-card ul li {
+        color: rgba(255, 255, 255, 0.9);
+        margin: 15px 0;
+        font-size: 1.1rem;
+        display: flex;
+        align-items: center;
+        transition: all 0.3s ease;
+      }
+
+      .skill-card ul li:hover {
+        color: white;
+        transform: translateX(5px);
+      }
+
+      .skill-card ul li i {
+        color: var(--secondary-color);
+        margin-right: 10px;
+        font-size: 0.9rem;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .skills-section {
+          padding: 60px 0;
+        }
+
+        .skills-section h2 {
+          font-size: 2.5rem;
+        }
+
+        .skill-card {
+          padding: 25px 20px;
+          margin-bottom: 20px;
+        }
+
+        .skill-card h4 {
+          font-size: 1.3rem;
+        }
+
+        .skill-card ul li {
+          font-size: 1rem;
+        }
+      }
+
+      /* Optional: Add animation for cards */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .skill-card {
+        animation: fadeInUp 0.6s ease forwards;
+        opacity: 0;
+      }
+
+      .skill-card:nth-child(1) {
+        animation-delay: 0.2s;
+      }
+      .skill-card:nth-child(2) {
+        animation-delay: 0.4s;
+      }
+      .skill-card:nth-child(3) {
+        animation-delay: 0.6s;
+      }
+      .skill-card:nth-child(4) {
+        animation-delay: 0.8s;
+      }
+      .skill-card:nth-child(5) {
+        animation-delay: 1s;
+      }
+      .skill-card:nth-child(6) {
+        animation-delay: 1.2s;
+      }
+
+      .g-4 {
+        --bs-gutter-y: 1.5rem;
+      }
+
+      .download-btn {
+        background-color: var(--secondary-color);
+        color: white;
+        padding: 10px 25px;
+        border-radius: 25px;
+        transition: all 0.3s;
+      }
+
+      .download-btn:hover {
+        background-color: var(--primary-color);
+        transform: scale(1.05);
+      }
+
+      .section-image {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 20px;
+      }
+      .typewriter {
+        border-right: 3px solid var(--secondary-color);
+        white-space: nowrap;
+        overflow: hidden;
+        margin: 0 auto;
+        animation: blink 0.75s step-end infinite;
+      }
+
+      .static-text {
+        border-right: none;
+        white-space: nowrap;
+        animation: none;
+        transition: all 0.3s ease;
+      }
+
+      @keyframes blink {
+        from,
+        to {
+          border-color: transparent;
+        }
+        50% {
+          border-color: var(--secondary-color);
+        }
+      }
+
+      /* Optional: Add these styles for a more dramatic effect */
+      .typewriter.typing {
+        animation: blink 0.75s step-end infinite;
+      }
+
+      .typewriter.typing::after {
+        content: "";
+        position: absolute;
+        right: -4px;
+        top: 0;
+        height: 100%;
+        width: 3px;
+        background: var(--secondary-color);
+      }
+
+      @media (max-width: 768px) {
+        .hero-section {
+          padding: 100px 0;
+        }
+        .section-image {
+          height: 200px;
+        }
+        .skills-section {
+          padding: 60px 0;
+        }
+
+        .skill-card {
+          margin-bottom: 20px;
+        }
+
+        .navbar-wrapper {
+          padding: 15px;
+        }
+
+        .navbar {
+          padding: 10px 15px;
+        }
+
+        .nav-link {
+          margin: 5px 0;
+        }
+
+        .nav-btn {
+          display: inline-block;
+          margin: 10px 0;
+        }
+      }
+
+      .skills-section {
+        padding: 100px 0;
+        background-color: var(--bg-color);
+      }
+
+      .section-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+        position: relative;
+        display: inline-block;
+      }
+
+      .section-title::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: -10px;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 3px;
+        background: var(--secondary-color);
+        border-radius: 2px;
+      }
+
+      .section-subtitle {
+        /* color: var(--text-color); */
+        color: white;
+        font-size: 1.1rem;
+        margin-bottom: 3rem;
+        opacity: 0.9;
+      }
+
+      .skill-card {
+        background-color: var(--card-bg);
+        border-radius: 15px;
+        padding: 30px;
+        height: 100%;
+        transition: all 0.3s ease;
+        box-shadow: var(--card-shadow);
+      }
+
+      .skill-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .skill-icon {
+        font-size: 2.5rem;
+        color: var(--secondary-color);
+        margin-bottom: 1.5rem;
+      }
+
+      .skill-card h4 {
+        color: var(--primary-color);
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        position: relative;
+      }
+
+      .skill-card h4::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -8px;
+        width: 40px;
+        height: 2px;
+        background: var(--secondary-color);
+      }
+
+      .skill-card ul li {
+        color: var(--text-color);
+        margin: 12px 0;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        transition: transform 0.2s ease;
+      }
+
+      .skill-card ul li:hover {
+        transform: translateX(5px);
+      }
+
+      .skill-card ul li i {
+        color: var(--secondary-color);
+        margin-right: 10px;
+        font-size: 0.8rem;
+      }
+
+      /* Animation */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .skill-card {
+        animation: fadeInUp 0.5s ease forwards;
+        opacity: 0;
+      }
+
+      .skill-card:nth-child(1) {
+        animation-delay: 0.1s;
+      }
+      .skill-card:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .skill-card:nth-child(3) {
+        animation-delay: 0.3s;
+      }
+      .skill-card:nth-child(4) {
+        animation-delay: 0.4s;
+      }
+      .skill-card:nth-child(5) {
+        animation-delay: 0.5s;
+      }
+      .skill-card:nth-child(6) {
+        animation-delay: 0.6s;
+      }
+
+      @media (max-width: 768px) {
+        .skills-section {
+          padding: 60px 0;
+        }
+
+        .section-title {
+          font-size: 2rem;
+        }
+
+        .skill-card {
+          margin-bottom: 20px;
+        }
+      }
+
+      /* Add these styles to ensure proper scrolling position */
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 80px; /* Adjust based on your navbar height */
+      }
+
+      .skills-section {
+        scroll-margin-top: 80px; /* Adjust based on your navbar height */
+      }
+
+      /* Optional: Add active state for current section in navbar */
+      .nav-link.active {
+        color: var(--secondary-color) !important;
+      }
+
+      /* Add these new styles in the <style> section */
+      .flip-card {
+        perspective: 1000px;
+        height: 250px;
+        margin-bottom: 30px;
+      }
+
+      .flip-card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.8s;
+        transform-style: preserve-3d;
+      }
+
+      .flip-card:hover .flip-card-inner {
+        transform: rotateY(180deg);
+      }
+
+      .flip-card-front,
+      .flip-card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: var(--card-shadow);
+        padding: 25px;
+        overflow-y: auto;
+      }
+      .flip-card-front {
+        background-color: #b9c3ff !important;
+      }
+
+      .flip-card-back {
+        transform: rotateY(180deg);
+      }
+
+      /* Remove or comment out any existing .skill-card styles that might be conflicting */
+
+      /* Adjust icon size */
+      .skill-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+      }
+
+      /* Adjust text sizes */
+      .flip-card h4 {
+        font-size: 1.3rem;
+        margin-bottom: 0.8rem;
+      }
+
+      .flip-card ul li {
+        font-size: 0.9rem;
+        margin: 8px 0;
+      }
+
+      /* Optional: Add animation for cards */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .flip-card {
+        animation: fadeInUp 0.6s ease forwards;
+        opacity: 0;
+      }
+
+      .flip-card:nth-child(1) {
+        animation-delay: 0.2s;
+      }
+      .flip-card:nth-child(2) {
+        animation-delay: 0.4s;
+      }
+      .flip-card:nth-child(3) {
+        animation-delay: 0.6s;
+      }
+      .flip-card:nth-child(4) {
+        animation-delay: 0.8s;
+      }
+      .flip-card:nth-child(5) {
+        animation-delay: 1s;
+      }
+      .flip-card:nth-child(6) {
+        animation-delay: 1.2s;
+      }
+
+      @media (max-width: 768px) {
+        .flip-card {
+          height: 230px;
+          margin-bottom: 20px;
+        }
+      }
+
+      /* Add these styles for the skill logos */
+      .skill-logo {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+        vertical-align: middle;
+      }
+
+      .flip-card-back ul li {
+        display: flex;
+        align-items: center;
+        margin: 12px 0;
+      }
+
+      /* Adjust the list item spacing */
+      .flip-card-back ul {
+        margin-top: 15px;
+      }
+
+      /* Optional: Add hover effect on list items */
+      .flip-card-back ul li:hover {
+        transform: translateX(5px);
+        transition: transform 0.2s ease;
+      }
+
+      /* Add these styles for the title underline effect */
+      .flip-card-back h4 {
+        position: relative;
+        display: inline-block;
+        padding-bottom: 5px;
+        margin-bottom: 15px;
+      }
+
+      .flip-card-back h4::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: var(--secondary-color);
+        transition: width 0.3s ease;
+      }
+
+      .flip-card-back:hover h4::after {
+        width: 100%;
+      }
+
+      /* Update existing styles for better spacing */
+      .flip-card-back {
+        padding: 25px;
+      }
+
+      .flip-card-back ul {
+        margin-top: 20px; /* Increased space between title and list */
+      }
+
+      /* Optional: Add a subtle transition to the title itself */
+      .flip-card-back h4 {
+        transition: color 0.3s ease;
+      }
+
+      .flip-card-back:hover h4 {
+        color: var(--secondary-color);
+      }
+
+      /* Update hamburger menu icon color */
+      .navbar-toggler-icon {
+        background-image: none !important;
+        position: relative;
+      }
+
+      .navbar-toggler-icon::before,
+      .navbar-toggler-icon::after,
+      .navbar-toggler-icon {
+        background-color: var(--navbar-text);
+      }
+
+      /* Update theme toggle color */
+      .theme-toggle {
+        color: var(--navbar-text);
+      }
+
+      /* Optional: Add hover effects */
+      .nav-link:hover {
+        color: var(--secondary-color) !important;
+      }
+
+      .navbar-brand:hover {
+        color: var(--secondary-color) !important;
+      }
+
+      /* Scrollbar styling for Webkit browsers (Chrome, Safari, Edge) */
+      .flip-card-back::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .flip-card-back::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        margin: 5px;
+      }
+
+      .flip-card-back::-webkit-scrollbar-thumb {
+        background: var(--secondary-color);
+        border-radius: 10px;
+        transition: all 0.3s ease;
+      }
+
+      .flip-card-back::-webkit-scrollbar-thumb:hover {
+        background: var(--primary-color);
+      }
+
+      /* Scrollbar styling for Firefox */
+      .flip-card-back {
+        scrollbar-width: thin;
+        scrollbar-color: var(--secondary-color) rgba(255, 255, 255, 0.1);
+      }
+
+      /* Add some padding to prevent content from touching scrollbar */
+      .flip-card-back {
+        padding-right: 15px;
+      }
+
+      /* Optional: Hide scrollbar until hover */
+      .flip-card-back {
+        overflow-y: auto;
+        scrollbar-width: none; /* For Firefox */
+        -ms-overflow-style: none; /* For Internet Explorer and Edge */
+      }
+
+      .flip-card-back::-webkit-scrollbar {
+        display: none;
+      }
+
+      .flip-card-back:hover {
+        scrollbar-width: thin; /* For Firefox */
+      }
+
+      .flip-card-back:hover::-webkit-scrollbar {
+        display: block;
+      }
+
+      /* Update the muted text style */
+      .flip-card-front .text-muted {
+        color: var(--text-muted) !important;
+      }
+
+      /* Optional: Add hover effect for the text */
+      .flip-card:hover .flip-card-front .text-muted {
+        color: var(--secondary-color) !important;
+        transition: color 0.3s ease;
+      }
+
+      /* Navbar styles */
+      .navbar-brand {
+        color: var(--navbar-text) !important;
+        transition: color 0.3s ease;
+      }
+
+      .navbar-brand:hover {
+        color: var(--navbar-text-hover) !important;
+      }
+
+      .nav-link {
+        color: var(--navbar-text) !important;
+        transition: color 0.3s ease;
+      }
+
+      .nav-link:hover {
+        color: var(--navbar-text-hover) !important;
+      }
+
+      /* Theme toggle button */
+      .theme-toggle {
+        color: var(--navbar-text);
+        transition: color 0.3s ease;
+      }
+
+      .theme-toggle:hover {
+        color: var(--navbar-text-hover);
+      }
+
+      /* Hamburger menu icon */
+      .navbar-toggler-icon {
+        background-image: none !important;
+        position: relative;
+      }
+
+      .navbar-toggler {
+        border-color: var(--navbar-text) !important;
+      }
+
+      .navbar-toggler-icon::before,
+      .navbar-toggler-icon::after,
+      .navbar-toggler-icon {
+        background-color: var(--navbar-text);
+      }
+
+      /* Mobile menu background in dark mode */
+      @media (max-width: 991px) {
+        [data-theme="dark"] .navbar-collapse {
+          background-color: var(--navbar-bg);
+        }
+
+        [data-theme="dark"] .nav-link:hover {
+          background-color: rgba(255, 255, 255, 0.1);
+        }
+      }
+
+      /* Contact section styles */
+      .contact-section {
+        position: relative;
+        padding: 100px 0;
+        background: url("https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80")
+          center/cover no-repeat fixed;
+        overflow: hidden;
+      }
+
+      .contact-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(0, 0, 0, 0.8) 0%,
+          rgba(0, 0, 0, 0.7) 100%
+        );
+        z-index: 1;
+      }
+
+      .contact-content {
+        position: relative;
+        z-index: 2;
+      }
+
+      /* Contact card with glassmorphism */
+      .contact-card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        padding: 35px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Form styles with enhanced visual appeal */
+      .form-control {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        color: white;
+        padding: 12px 20px;
+        transition: all 0.3s ease;
+      }
+
+      .form-control:focus {
+        background: rgba(255, 255, 255, 0.15);
+        border-color: var(--secondary-color);
+        box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1);
+        color: white;
+      }
+
+      .form-control::placeholder {
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      /* Submit button styling */
+      .btn-primary {
+        background-color: var(--secondary-color);
+        border: none;
+        padding: 12px 35px;
+        font-weight: 500;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .btn-primary:hover {
+        background-color: var(--primary-color);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+      }
+
+      /* Section title styling */
+      .contact-title {
+        color: white;
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        position: relative;
+        display: inline-block;
+      }
+
+      .contact-title::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: -10px;
+        width: 60px;
+        height: 3px;
+        background: var(--secondary-color);
+        border-radius: 2px;
+      }
+
+      .contact-subtitle {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 1.1rem;
+        margin-bottom: 3rem;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .contact-section {
+          padding: 60px 0;
+        }
+
+        .contact-title {
+          font-size: 2rem;
+        }
+
+        .contact-card {
+          padding: 25px;
+          margin: 0 15px;
+        }
+
+        .btn-primary {
+          width: 100%;
+        }
+      }
+
+      /* Optional: Add animation for form elements */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .contact-card {
+        animation: fadeInUp 0.6s ease forwards;
+      }
+
+      .form-control {
+        animation: fadeInUp 0.6s ease forwards;
+      }
+
+      .form-control:nth-child(1) {
+        animation-delay: 0.2s;
+      }
+      .form-control:nth-child(2) {
+        animation-delay: 0.3s;
+      }
+      .form-control:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+      .form-control:nth-child(4) {
+        animation-delay: 0.5s;
+      }
+
+      /* Projects Section Styles */
+      .projects-section {
+        padding: 100px 0;
+        background-color: var(--bg-color);
+      }
+
+      .project-card {
+        background: var(--card-bg);
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: var(--card-shadow);
+        transition: transform 0.3s ease;
+        height: 100%;
+        border: 2px solid black;
+      }
+
+      .project-card:hover {
+        transform: translateY(-10px);
+      }
+
+      .project-image {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .project-image img {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
+
+      .project-card:hover .project-image img {
+        transform: scale(1.1);
+      }
+
+      .project-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .project-card:hover .project-overlay {
+        opacity: 1;
+      }
+
+      .project-links {
+        display: flex;
+        gap: 20px;
+      }
+
+      .project-link {
+        width: 45px;
+        height: 45px;
+        background: var(--secondary-color);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+      }
+
+      .project-link:hover {
+        background: var(--primary-color);
+        transform: translateY(-3px);
+      }
+
+      .project-content {
+        padding: 25px;
+      }
+
+      .project-title {
+        font-size: 1.3rem;
+        color: var(--text-color);
+        margin-bottom: 15px;
+      }
+
+      .project-description {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        margin-bottom: 20px;
+      }
+
+      .tech-stack {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .tech-item {
+        background: rgba(52, 152, 219, 0.1);
+        color: var(--secondary-color);
+        padding: 5px 12px;
+        border-radius: 15px;
+        font-size: 0.85rem;
+        transition: all 0.3s ease;
+      }
+
+      .tech-item:hover {
+        background: var(--secondary-color);
+        color: white;
+      }
+
+      /* Responsive Adjustments */
+      @media (max-width: 768px) {
+        .projects-section {
+          padding: 60px 0;
+        }
+
+        .project-card {
+          margin-bottom: 30px;
+        }
+
+        .project-image img {
+          height: 200px;
+        }
+      }
+
+      /* Animation */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .project-card {
+        animation: fadeInUp 0.6s ease forwards;
+        opacity: 0;
+      }
+
+      .project-card:nth-child(1) {
+        animation-delay: 0.2s;
+      }
+      .project-card:nth-child(2) {
+        animation-delay: 0.3s;
+      }
+      .project-card:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+      .project-card:nth-child(4) {
+        animation-delay: 0.5s;
+      }
+      .project-card:nth-child(5) {
+        animation-delay: 0.6s;
+      }
+      .project-card:nth-child(6) {
+        animation-delay: 0.7s;
+      }
+
+      /* Animation classes */
+      .fade-in {
+        opacity: 0;
+        animation: fadeIn 0.6s ease-out forwards;
+      }
+
+      .slide-up {
+        opacity: 0;
+        animation: slideUp 0.6s ease-out forwards;
+      }
+
+      .slide-in-left {
+        opacity: 0;
+        animation: slideInLeft 0.6s ease-out forwards;
+      }
+
+      .slide-in-right {
+        opacity: 0;
+        animation: slideInRight 0.6s ease-out forwards;
+      }
+
+      .scale-in {
+        opacity: 0;
+        animation: scaleIn 0.6s ease-out forwards;
+      }
+
+      /* Animation keyframes */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes slideInLeft {
+        from {
+          opacity: 0;
+          transform: translateX(-50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes slideInRight {
+        from {
+          opacity: 0;
+          transform: translateX(50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes scaleIn {
+        from {
+          opacity: 0;
+          transform: scale(0.9);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .playground-monitor {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        z-index: 9999;
+        cursor: grab;
+        width: 150px;
+        transform-origin: center center;
+        user-select: none;
+      }
+
+      .monitor-frame {
+        background: #2c3e50;
+        border-radius: 10px;
+        padding: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .monitor-screen {
+        background: #1a1a1a;
+        border-radius: 5px;
+        padding: 15px;
+        overflow: hidden;
+      }
+
+      .screen-content {
+        animation: typing 2s infinite;
+      }
+
+      .code-line {
+        height: 4px;
+        background: #3498db;
+        margin: 6px 0;
+        border-radius: 2px;
+        opacity: 0.7;
+      }
+
+      .code-line:nth-child(2) {
+        width: 75%;
+      }
+
+      .code-line:nth-child(3) {
+        width: 50%;
+      }
+
+      .monitor-stand {
+        width: 40%;
+        height: 15px;
+        background: #2c3e50;
+        margin: 5px auto 0;
+        border-radius: 0 0 5px 5px;
+      }
+
+      .drag-hint {
+        text-align: center;
+        color: #6c757d;
+        font-size: 0.8rem;
+        margin-top: 5px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .playground-monitor:hover .drag-hint {
+        opacity: 1;
+      }
+
+      .playground-monitor.dragging {
+        cursor: grabbing;
+      }
+
+      @keyframes typing {
+        0% {
+          transform: translateX(-10%);
+        }
+        100% {
+          transform: translateX(10%);
+        }
+      }
+
+      /* Make monitor smaller on mobile */
+      @media (max-width: 768px) {
+        .playground-monitor {
+          width: 100px;
+          bottom: 20px;
+          right: 20px;
+        }
+
+        .code-line {
+          height: 3px;
+          margin: 4px 0;
+        }
+
+        .monitor-stand {
+          height: 10px;
+        }
+      }
+
+      /* Add this to your existing CSS */
+      [data-theme="dark"] .navbar {
+        background-color: rgba(
+          40,
+          40,
+          40,
+          0.95
+        ); /* Darker background for navbar */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Darker shadow for navbar */
+      }
+
+      [data-theme="dark"] .nav-link {
+        color: white !important; /* Ensure text color is visible in dark mode */
+      }
+
+      [data-theme="dark"] .nav-link:hover {
+        color: grey !important; /* Change hover color for nav links */
+      }
+
+      [data-theme="dark"] .navbar-brand {
+        color: white !important; /* Ensure brand color is visible in dark mode */
+      }
+      [data-theme="dark"] .navbar-brand:hover {
+        color: rgb(
+          159,
+          154,
+          154
+        ) !important; /* Ensure brand color is visible in dark mode */
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Add this right after your opening <body> tag -->
+    <div class="playground-monitor" id="draggableMonitor">
+      <div class="monitor-frame">
+        <div class="monitor-screen">
+          <div class="screen-content">
+            <div class="code-line"></div>
+            <div class="code-line"></div>
+            <div class="code-line"></div>
+          </div>
+        </div>
+        <div class="monitor-stand"></div>
+      </div>
+      <div class="drag-hint">Drag me!</div>
+    </div>
+
+    <!-- Navbar -->
+    <div class="navbar-wrapper">
+      <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+          <a class="navbar-brand fw-bold" href="#">Utkarsh Shukla</a>
+
+          <!-- Hamburger Menu -->
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto align-items-center">
+              <li class="nav-item">
+                <a class="nav-link" href="#about">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#skills">Skills</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#projects">Projects</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#contact">Contact</a>
+              </li>
+              <!-- Single Theme Toggle -->
+              <li class="nav-item ms-lg-3">
+                <button class="theme-toggle" id="themeToggle">
+                  <i class="fas fa-moon"></i>
+                </button>
+              </li>
+              <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+                <a class="nav-btn" href="./src/Utkarsh Shukla.pdf" download
+                  >Download Resume</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <!-- Updated Hero Section -->
+    <section class="hero-section" id="about">
+      <img
+        src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97"
+        alt="Developer Working"
+        class="hero-image"
+      />
+      <div class="hero-overlay"></div>
+      <div class="container h-100">
+        <div
+          class="row align-items-center justify-content-center h-100 text-center"
+        >
+          <div class="col-lg-8 hero-content">
+            <h1 class="display-3 fw-bold mb-4 typewriter" id="heroText"></h1>
+            <p class="lead fs-2">
+              Transforming ideas into elegant digital solutions
+            </p>
+            <div class="social-links mt-4">
+              <a href="https://linkedin.com/in/johndoe" target="_blank"
+                ><i class="fab fa-linkedin"></i
+              ></a>
+              <a href="https://github.com/utkarrshhh" target="_blank"
+                ><i class="fab fa-github"></i
+              ></a>
+              <a href="mailto:utkarsh3639@gmail.com"
+                ><i class="fas fa-envelope"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Updated Skills Section -->
+    <section class="skills-section" id="skills">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 text-center mb-5">
+            <h2 class="section-title">Technical Skills</h2>
+            <p class="section-subtitle">
+              Crafting digital experiences with modern technologies and best
+              practices.
+            </p>
+          </div>
+        </div>
+        <div class="row g-4">
+          <!-- Frontend Development Card -->
+          <div class="col-md-4">
+            <div class="flip-card">
+              <div class="flip-card-inner">
+                <div class="flip-card-front">
+                  <i class="fas fa-code skill-icon"></i>
+                  <h4>Frontend Development</h4>
+                  <p class="text-muted mt-3">Hover to see skills</p>
+                </div>
+                <div class="flip-card-back">
+                  <h4>Frontend Skills</h4>
+                  <ul class="list-unstyled">
+                    <li>
+                      <img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
+                        class="skill-logo"
+                        alt="HTML5"
+                      />
+                      HTML5, CSS3, JavaScript
+                    </li>
+                    <li>
+                      <img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+                        class="skill-logo"
+                        alt="React"
+                      />
+                      React.js
+                    </li>
+                    <li>
+                      <img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg"
+                        class="skill-logo"
+                        alt="Bootstrap"
+                      />
+                      Bootstrap, Tailwind CSS
+                    </li>
+                    <li>
+                      <img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg"
+                        class="skill-logo"
+                        alt="TypeScript"
+                      />
+                      Redux, jQuery
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Backend Development Card -->
+          <div class="col-md-4">
+            <div class="flip-card">
+              <div class="flip-card-inner">
+                <div class="flip-card-front">
+                  <i class="fas fa-server skill-icon"></i>
+                  <h4>Backend Development</h4>
+                  <p class="text-muted mt-3">Hover to see skills</p>
+                </div>
+                <div class="flip-card-back">
+                  <h4>Backend Skills</h4>
+                  <ul class="list-unstyled">
+                    <li>
+                      <img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
+                        class="skill-logo"
+                        alt="Node.js"
+                      />
+                      Node.js, Express.js
+                    </li>
+                    <li>
+                      <img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+                        class="skill-logo"
+                        alt="Python"
+                      />
+                      Python, Django
+                    </li>
+                    <li>
+                      <img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/graphql/graphql-plain.svg"
+                        class="skill-logo"
+                        alt="GraphQL"
+                      />
+                      GraphQL
+                    </li>
+                    <li>
+                      <img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg"
+                        class="skill-logo"
+                        alt="Spring"
+                      />
+                      Java Spring Boot
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Database & Cloud Card -->
+          <div class="col-md-4">
+            <div class="flip-card">
+              <div class="flip-card-inner">
+                <div class="flip-card-front">
+                  <i class="fas fa-database skill-icon"></i>
+                  <h4>Database & Cloud</h4>
+                  <p class="text-muted mt-3">Hover to see skills</p>
+                </div>
+                <div class="flip-card-back">
+                  <h4>Database & Cloud Skills</h4>
+                  <ul class="list-unstyled">
+                    <li>
+                      <img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg"
+                        class="skill-logo"
+                        alt="MongoDB"
+                      />
+                      MongoDB, PostgreSQL
+                    </li>
+                    <li>
+                      <img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg"
+                        class="skill-logo"
+                        alt="MySQL"
+                      />
+                      MySQL, Redis
+                    </li>
+                    <li>
+                      <img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg"
+                        class="skill-logo"
+                        alt="AWS"
+                      />
+                      AWS Services
+                    </li>
+                    <li>
+                      <img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg"
+                        class="skill-logo"
+                        alt="Firebase"
+                      />
+                      Firebase
+                    </li>
+                    <li>
+                      <img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg"
+                        class="skill-logo"
+                        alt="Azure"
+                      />
+                      Azure Fundamentals
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- DevOps & Tools Card -->
+          <div class="col-md-4">
+            <div class="flip-card">
+              <div class="flip-card-inner">
+                <div class="flip-card-front">
+                  <i class="fas fa-cogs skill-icon"></i>
+                  <h4>DevOps & Tools</h4>
+                  <p class="text-muted mt-3">Hover to see skills</p>
+                </div>
+                <div class="flip-card-back">
+                  <h4>DevOps Skills</h4>
+                  <ul class="list-unstyled">
+                    <li><i class="fas fa-check"></i> Git, GitHub Actions</li>
+                    <li><i class="fas fa-check"></i> Docker</li>
+                    <li><i class="fas fa-check"></i> Jenkins, CI/CD</li>
+                    <li><i class="fas fa-check"></i> Linux Administration</li>
+                    <li><i class="fas fa-check"></i> Shell Scripting</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Programming Languages Card -->
+          <div class="col-md-4">
+            <div class="flip-card">
+              <div class="flip-card-inner">
+                <div class="flip-card-front">
+                  <i class="fas fa-laptop-code skill-icon"></i>
+                  <h4>Programming Languages</h4>
+                  <p class="text-muted mt-3">Hover to see skills</p>
+                </div>
+                <div class="flip-card-back">
+                  <h4>Language Skills</h4>
+                  <ul class="list-unstyled">
+                    <li>
+                      <img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg"
+                        class="skill-logo"
+                        alt="C++"
+                      />
+                      C++, STL
+                    </li>
+                    <li>
+                      <img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"
+                        class="skill-logo"
+                        alt="Java"
+                      />
+                      Java, Collections
+                    </li>
+                    <li>
+                      <img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+                        class="skill-logo"
+                        alt="Python"
+                      />
+                      Python
+                    </li>
+                    <li>
+                      <img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                        class="skill-logo"
+                        alt="JavaScript"
+                      />
+                      JavaScript/TypeScript
+                    </li>
+                    <li>
+                      <img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original-wordmark.svg"
+                        class="skill-logo"
+                        alt="Go"
+                      />
+                      Go (Basic)
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Core CS Fundamentals Card -->
+          <div class="col-md-4">
+            <div class="flip-card">
+              <div class="flip-card-inner">
+                <div class="flip-card-front">
+                  <i class="fas fa-network-wired skill-icon"></i>
+                  <h4>Core CS Fundamentals</h4>
+                  <p class="text-muted mt-3">Hover to see skills</p>
+                </div>
+                <div class="flip-card-back">
+                  <h4>CS Skills</h4>
+                  <ul class="list-unstyled">
+                    <li>
+                      <i class="fas fa-check"></i> Data Structures & Algorithms
+                    </li>
+                    <li>
+                      <i class="fas fa-check"></i> Object-Oriented Programming
+                    </li>
+                    <li><i class="fas fa-check"></i> Computer Networks</li>
+                    <li><i class="fas fa-check"></i> Operating Systems</li>
+                    <li><i class="fas fa-check"></i> System Design</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects-section">
+      <div class="container">
+        <div class="row text-center mb-5">
+          <div class="col-lg-8 mx-auto">
+            <h2 class="section-title">My Projects</h2>
+            <p class="section-subtitle">Here are some of my recent works</p>
+          </div>
+        </div>
+
+        <div class="row g-4">
+          <!-- Project Card 1 -->
+          <div class="col-md-6 col-lg-4">
+            <div class="project-card">
+              <div class="project-image">
+                <img src="./src/clipControl1.png" alt="E-Commerce Platform" />
+                <div class="project-overlay">
+                  <div class="project-links">
+                    <a
+                      href="https://github.com/utkarrshhh/clip-control-frontend"
+                      target="_blank"
+                      class="project-link"
+                      ><i class="fab fa-github"></i
+                    ></a>
+                    <a
+                      href="https://clip-control.vercel.app/"
+                      target="_blank"
+                      class="project-link"
+                      ><i class="fas fa-external-link-alt"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+              <div class="project-content">
+                <h3 class="project-title">Clip Control</h3>
+                <p class="project-description">
+                  Image-based editing platform that allows users to split images
+                  into sections, assign different editors to each section, and
+                  seamlessly merge the edited parts into a final image."
+                </p>
+                <div class="tech-stack">
+                  <span class="tech-item">React</span>
+                  <span class="tech-item">Node.js</span>
+                  <span class="tech-item">MongoDB</span>
+                  <span class="tech-item">JWT</span>
+                  <span class="tech-item">Multer</span>
+                  <!-- <span class="tech-item"></span> -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project Card 2 -->
+          <div class="col-md-6 col-lg-4">
+            <div class="project-card">
+              <div class="project-image">
+                <img src="./src/mac-os-home.png" alt="Task Manager" />
+                <div class="project-overlay">
+                  <div class="project-links">
+                    <a
+                      href="https://github.com/utkarrshhh/mac-os-home-react"
+                      target="_blank"
+                      class="project-link"
+                      ><i class="fab fa-github"></i
+                    ></a>
+                    <a
+                      href="https://mac-os-home-react.vercel.app/"
+                      target="_blank"
+                      class="project-link"
+                      ><i class="fas fa-external-link-alt"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+              <div class="project-content">
+                <h3 class="project-title">Mac OS home</h3>
+                <p class="project-description">
+                  "Mac-inspired React dashboard that brings the elegance of
+                  macOS to your browser with seamless navigation and intuitive
+                  design."
+                </p>
+                <div class="tech-stack">
+                  <span class="tech-item">ReactJS</span>
+                  <span class="tech-item">TailwindCSS</span>
+                  <span class="tech-item">React Router</span>
+                  <span class="tech-item">Context API</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project Card 3 -->
+          <div class="col-md-6 col-lg-4">
+            <div class="project-card">
+              <div class="project-image">
+                <img src="./src/spotify.png" alt="Social Media Dashboard" />
+                <div class="project-overlay">
+                  <div class="project-links">
+                    <a
+                      href="https://github.com/utkarrshhh/spotify-main-app"
+                      target="_blank"
+                      class="project-link"
+                      ><i class="fab fa-github"></i
+                    ></a>
+                    <a
+                      href="https://musicplayer-clone-app.vercel.app/"
+                      target="_blank"
+                      class="project-link"
+                      ><i class="fas fa-external-link-alt"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+              <div class="project-content">
+                <h3 class="project-title">Music Player</h3>
+                <p class="project-description">
+                  Feature-rich music player that offers a seamless experience
+                  for discovering, playing, and managing music, with a design
+                  and functionality similar to Spotify.
+                </p>
+                <div class="tech-stack">
+                  <span class="tech-item">Vanilla JS</span>
+                  <span class="tech-item">spotify web API</span>
+                  <span class="tech-item">HTML</span>
+                  <span class="tech-item">CSS</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project Card 4 -->
+          <div class="col-md-6 col-lg-4">
+            <div class="project-card">
+              <div class="project-image">
+                <img
+                  src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3"
+                  alt="AI Chat Bot"
+                />
+                <div class="project-overlay">
+                  <div class="project-links">
+                    <a href="#" target="_blank" class="project-link"
+                      ><i class="fab fa-github"></i
+                    ></a>
+                    <a href="#" target="_blank" class="project-link"
+                      ><i class="fas fa-external-link-alt"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+              <div class="project-content">
+                <h3 class="project-title">AI Chat Bot</h3>
+                <p class="project-description">
+                  Intelligent chatbot powered by machine learning for customer
+                  support automation.
+                </p>
+                <div class="tech-stack">
+                  <span class="tech-item">Python</span>
+                  <span class="tech-item">TensorFlow</span>
+                  <span class="tech-item">Flask</span>
+                  <span class="tech-item">Docker</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project Card 5 -->
+          <div class="col-md-6 col-lg-4">
+            <div class="project-card">
+              <div class="project-image">
+                <img
+                  src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3"
+                  alt="Finance Tracker"
+                />
+                <div class="project-overlay">
+                  <div class="project-links">
+                    <a href="#" target="_blank" class="project-link"
+                      ><i class="fab fa-github"></i
+                    ></a>
+                    <a href="#" target="_blank" class="project-link"
+                      ><i class="fas fa-external-link-alt"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+              <div class="project-content">
+                <h3 class="project-title">Finance Tracker</h3>
+                <p class="project-description">
+                  Personal finance management tool with budget planning and
+                  expense tracking features.
+                </p>
+                <div class="tech-stack">
+                  <span class="tech-item">React Native</span>
+                  <span class="tech-item">Redux</span>
+                  <span class="tech-item">Node.js</span>
+                  <span class="tech-item">PostgreSQL</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project Card 6 -->
+          <div class="col-md-6 col-lg-4">
+            <div class="project-card">
+              <div class="project-image">
+                <img
+                  src="https://images.unsplash.com/photo-1522542550221-31fd19575a2d?ixlib=rb-4.0.3"
+                  alt="Weather App"
+                />
+                <div class="project-overlay">
+                  <div class="project-links">
+                    <a href="#" target="_blank" class="project-link"
+                      ><i class="fab fa-github"></i
+                    ></a>
+                    <a href="#" target="_blank" class="project-link"
+                      ><i class="fas fa-external-link-alt"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+              <div class="project-content">
+                <h3 class="project-title">Weather App</h3>
+                <p class="project-description">
+                  Real-time weather forecasting app with location-based services
+                  and alerts.
+                </p>
+                <div class="tech-stack">
+                  <span class="tech-item">Svelte</span>
+                  <span class="tech-item">Express</span>
+                  <span class="tech-item">OpenWeather API</span>
+                  <span class="tech-item">PWA</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Updated Contact Section -->
+    <section class="contact-section" id="contact">
+      <div class="contact-overlay"></div>
+      <div class="container contact-content">
+        <div class="row justify-content-center mb-5">
+          <div class="col-md-8 text-center">
+            <h2 class="contact-title">Get In Touch</h2>
+            <p class="contact-subtitle">
+              Let's collaborate and bring your ideas to life.
+            </p>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-md-8">
+            <div class="contact-card">
+              <form>
+                <div class="mb-4">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Your Name"
+                  />
+                </div>
+                <div class="mb-4">
+                  <input
+                    type="email"
+                    class="form-control"
+                    placeholder="Your Email"
+                  />
+                </div>
+                <div class="mb-4">
+                  <textarea
+                    class="form-control"
+                    rows="5"
+                    placeholder="Your Message"
+                  ></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">
+                  Send Message
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Add these elements right after body tag -->
+    <div class="custom-cursor"></div>
+    <div class="cursor-dot"></div>
+
+    <!-- Add this before closing body tag -->
+
+    <script src="index.js"></script>
+
+    <!-- Update the JavaScript before closing </body> tag -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const monitor = document.getElementById("draggableMonitor");
+
+        // Physics parameters
+        let velocity = { x: 0, y: 0 };
+        let position = { x: 0, y: 0 };
+        const damping = 0.95; // Increased for smoother movement
+        let isDragging = false;
+        let dragStart = { x: 0, y: 0 };
+        let lastPosition = { x: 0, y: 0 };
+        let lastMousePosition = { x: 0, y: 0 };
+        let lastTime = performance.now();
+
+        function getMonitorBounds() {
+          const rect = monitor.getBoundingClientRect();
+          return {
+            left: -rect.left,
+            right: window.innerWidth - rect.right,
+            top: -rect.top,
+            bottom: window.innerHeight - rect.bottom,
+          };
+        }
+
+        function updatePosition(currentTime) {
+          const deltaTime = (currentTime - lastTime) / 16; // Normalize to 60fps
+          lastTime = currentTime;
+
+          if (!isDragging) {
+            // Apply damping to velocity
+            velocity.x *= Math.pow(damping, deltaTime);
+            velocity.y *= Math.pow(damping, deltaTime);
+
+            // Update position based on velocity
+            position.x += velocity.x * deltaTime;
+            position.y += velocity.y * deltaTime;
+
+            // Bounce off screen edges
+            const bounds = getMonitorBounds();
+            if (position.x < bounds.left) {
+              position.x = bounds.left;
+              velocity.x = Math.abs(velocity.x) * 0.8;
+            }
+            if (position.x > bounds.right) {
+              position.x = bounds.right;
+              velocity.x = -Math.abs(velocity.x) * 0.8;
+            }
+            if (position.y < bounds.top) {
+              position.y = bounds.top;
+              velocity.y = Math.abs(velocity.y) * 0.8;
+            }
+            if (position.y > bounds.bottom) {
+              position.y = bounds.bottom;
+              velocity.y = -Math.abs(velocity.y) * 0.8;
+            }
+          }
+
+          // Calculate rotation based on velocity with smoothing
+          const targetRotation = velocity.x * 1.5;
+          const currentRotation = parseFloat(monitor.dataset.rotation || 0);
+          const smoothedRotation =
+            currentRotation + (targetRotation - currentRotation) * 0.2;
+          monitor.dataset.rotation = smoothedRotation;
+
+          // Calculate scale based on velocity with smoothing
+          const speed = Math.sqrt(
+            velocity.x * velocity.x + velocity.y * velocity.y
+          );
+          const targetScale = 1 + Math.min(speed * 0.003, 0.2);
+          const currentScale = parseFloat(monitor.dataset.scale || 1);
+          const smoothedScale =
+            currentScale + (targetScale - currentScale) * 0.2;
+          monitor.dataset.scale = smoothedScale;
+
+          // Apply transforms
+          monitor.style.transform = `translate(${position.x}px, ${position.y}px) rotate(${smoothedRotation}deg) scale(${smoothedScale})`;
+
+          if (
+            !isDragging &&
+            (Math.abs(velocity.x) > 0.01 || Math.abs(velocity.y) > 0.01)
+          ) {
+            requestAnimationFrame(updatePosition);
+          }
+        }
+
+        function calculateVelocity(currentMousePosition, currentTime) {
+          const deltaTime = currentTime - lastTime;
+          if (deltaTime > 0) {
+            velocity.x =
+              ((currentMousePosition.x - lastMousePosition.x) / deltaTime) * 16; // Scale to 60fps
+            velocity.y =
+              ((currentMousePosition.y - lastMousePosition.y) / deltaTime) * 16;
+          }
+          lastMousePosition = { ...currentMousePosition };
+        }
+
+        monitor.addEventListener("mousedown", (e) => {
+          isDragging = true;
+          monitor.classList.add("dragging");
+          dragStart = {
+            x: e.clientX - position.x,
+            y: e.clientY - position.y,
+          };
+          lastMousePosition = { x: e.clientX, y: e.clientY };
+          lastTime = performance.now();
+          velocity = { x: 0, y: 0 };
+        });
+
+        window.addEventListener("mousemove", (e) => {
+          if (!isDragging) return;
+
+          const currentTime = performance.now();
+          const currentMousePosition = { x: e.clientX, y: e.clientY };
+
+          position.x = currentMousePosition.x - dragStart.x;
+          position.y = currentMousePosition.y - dragStart.y;
+
+          calculateVelocity(currentMousePosition, currentTime);
+          requestAnimationFrame(updatePosition);
+        });
+
+        window.addEventListener("mouseup", () => {
+          if (!isDragging) return;
+
+          isDragging = false;
+          monitor.classList.remove("dragging");
+
+          // Smooth out the release velocity
+          velocity.x *= 1.2;
+          velocity.y *= 1.2;
+
+          requestAnimationFrame(updatePosition);
+        });
+
+        // Touch support with improved handling
+        monitor.addEventListener("touchstart", (e) => {
+          e.preventDefault();
+          isDragging = true;
+          monitor.classList.add("dragging");
+          const touch = e.touches[0];
+          dragStart = {
+            x: touch.clientX - position.x,
+            y: touch.clientY - position.y,
+          };
+          lastMousePosition = { x: touch.clientX, y: touch.clientY };
+          lastTime = performance.now();
+          velocity = { x: 0, y: 0 };
+        });
+
+        window.addEventListener("touchmove", (e) => {
+          if (!isDragging) return;
+
+          const currentTime = performance.now();
+          const touch = e.touches[0];
+          const currentMousePosition = { x: touch.clientX, y: touch.clientY };
+
+          position.x = currentMousePosition.x - dragStart.x;
+          position.y = currentMousePosition.y - dragStart.y;
+
+          calculateVelocity(currentMousePosition, currentTime);
+          requestAnimationFrame(updatePosition);
+        });
+
+        window.addEventListener("touchend", () => {
+          if (!isDragging) return;
+
+          isDragging = false;
+          monitor.classList.remove("dragging");
+
+          // Smooth out the release velocity
+          velocity.x *= 1.2;
+          velocity.y *= 1.2;
+
+          requestAnimationFrame(updatePosition);
+        });
+      });
+    </script>
+  </body>
+</html>
