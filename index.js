@@ -112,10 +112,11 @@ document.addEventListener("DOMContentLoaded", () => {
     document.documentElement.setAttribute("data-theme", newTheme);
     localStorage.setItem("theme", newTheme);
     updateIcon(newTheme);
+    updateCardStyles(newTheme);
   });
 
   function updateIcon(theme) {
-    icon.className = theme === "light" ? "fas fa-moon" : "fas fa-sun";
+    icon.className = theme === "light" ? "fas fa-sun" : "fas fa-moon";
   }
 });
 
@@ -258,3 +259,42 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+// Add this function to update card styles based on the current theme
+function updateCardStyles(theme) {
+  const skillCards = document.querySelectorAll(".skill-card");
+  const flipCards = document.querySelectorAll(".flip-card");
+
+  skillCards.forEach((card) => {
+    if (theme === "light") {
+      card.style.background = "#ffffff"; // White background for light theme
+      card.style.color = "#2c3e50"; // Dark text color for visibility
+      card.style.border = "1px solid rgba(0, 0, 0, 0.1)"; // Light border
+    } else {
+      card.style.background = "rgba(40, 40, 40, 0.95)"; // Dark background for dark theme
+      card.style.color = "#ecf0f1"; // Light text color for visibility
+      card.style.border = "1px solid rgba(255, 255, 255, 0.1)"; // Light border
+    }
+  });
+
+  flipCards.forEach((card) => {
+    if (theme === "light") {
+      card.querySelector(".flip-card-front").style.backgroundColor = "#ffffff"; // White background
+      card.querySelector(".flip-card-back").style.backgroundColor =
+        "rgba(255, 255, 255, 0.95)"; // Light background
+      card.querySelector(".flip-card-front").style.color = "#2c3e50"; // Dark text color
+      card.querySelector(".flip-card-back").style.color = "#2c3e50"; // Dark text color
+    } else {
+      card.querySelector(".flip-card-front").style.backgroundColor =
+        "rgba(40, 40, 40, 0.95)"; // Dark background
+      card.querySelector(".flip-card-back").style.backgroundColor =
+        "rgba(40, 40, 40, 0.95)"; // Dark background
+      card.querySelector(".flip-card-front").style.color = "#ecf0f1"; // Light text color
+      card.querySelector(".flip-card-back").style.color = "#ecf0f1"; // Light text color
+    }
+  });
+}
+
+// Call the function on page load to set initial styles
+updateCardStyles(currentTheme);
+updateIcon(currentTheme);

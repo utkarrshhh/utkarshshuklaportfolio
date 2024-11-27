@@ -291,9 +291,9 @@
       }
 
       .skill-card {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: #ffffff;
+        color: #2c3e50;
+        border: 1px solid rgba(0, 0, 0, 0.1);
         padding: 35px 25px;
         border-radius: 20px;
         box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
@@ -321,7 +321,7 @@
 
       .skill-card:hover {
         transform: translateY(-10px);
-        box-shadow: 0 6px 40px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
       }
 
       .skill-card:hover::before {
@@ -716,18 +716,20 @@
         width: 100%;
         height: 100%;
         backface-visibility: hidden;
-        background-color: white;
+        background-color: #ffffff;
+        color: #2c3e50;
         border-radius: 15px;
         box-shadow: var(--card-shadow);
         padding: 25px;
         overflow-y: auto;
       }
       .flip-card-front {
-        background-color: #b9c3ff !important;
+        background-color: #ffffff;
       }
 
       .flip-card-back {
         transform: rotateY(180deg);
+        background-color: rgba(255, 255, 255, 0.95);
       }
 
       /* Remove or comment out any existing .skill-card styles that might be conflicting */
@@ -1719,22 +1721,6 @@
                       />
                       Python, Django
                     </li>
-                    <li>
-                      <img
-                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/graphql/graphql-plain.svg"
-                        class="skill-logo"
-                        alt="GraphQL"
-                      />
-                      GraphQL
-                    </li>
-                    <li>
-                      <img
-                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg"
-                        class="skill-logo"
-                        alt="Spring"
-                      />
-                      Java Spring Boot
-                    </li>
                   </ul>
                 </div>
               </div>
@@ -1784,14 +1770,6 @@
                         alt="Firebase"
                       />
                       Firebase
-                    </li>
-                    <li>
-                      <img
-                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg"
-                        class="skill-logo"
-                        alt="Azure"
-                      />
-                      Azure Fundamentals
                     </li>
                   </ul>
                 </div>
@@ -1844,11 +1822,11 @@
                     </li>
                     <li>
                       <img
-                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg"
                         class="skill-logo"
-                        alt="Java"
+                        alt="C"
                       />
-                      Java, Collections
+                      C
                     </li>
                     <li>
                       <img
