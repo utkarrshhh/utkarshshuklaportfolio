@@ -862,15 +862,14 @@
 
       /* Update hamburger menu icon color */
       .navbar-toggler-icon {
-        background-image: none !important;
+        background-image: url(./src/hamburger.png) !important;
         position: relative;
       }
 
-      .navbar-toggler-icon::before,
-      .navbar-toggler-icon::after,
-      .navbar-toggler-icon {
+      /* .navbar-toggler-icon::before,
+      .navbar-toggler-icon::after {
         background-color: var(--navbar-text);
-      }
+      } */
 
       /* Update theme toggle color */
       .theme-toggle {
@@ -979,17 +978,12 @@
 
       /* Hamburger menu icon */
       .navbar-toggler-icon {
-        background-image: none !important;
+        background-image: url(./src/hamburger.png) !important;
         position: relative;
       }
 
-      .navbar-toggler {
-        border-color: var(--navbar-text) !important;
-      }
-
       .navbar-toggler-icon::before,
-      .navbar-toggler-icon::after,
-      .navbar-toggler-icon {
+      .navbar-toggler-icon::after {
         background-color: var(--navbar-text);
       }
 
@@ -1610,7 +1604,10 @@
           class="row align-items-center justify-content-center h-100 text-center"
         >
           <div class="col-lg-8 hero-content">
-            <h1 class="display-3 fw-bold mb-4 typewriter" id="heroText"></h1>
+            <h1
+              class="fw-[450] mb-4 typewriter sm:text-xl md:text-2xl lg:text-3xl"
+              id="heroText"
+            ></h1>
             <p class="lead fs-2">
               Transforming ideas into elegant digital solutions
             </p>
